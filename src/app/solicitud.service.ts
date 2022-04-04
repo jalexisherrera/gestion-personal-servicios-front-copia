@@ -20,13 +20,13 @@ export class SolicitudService {
 
   }
 
-  update(id: number, solicitud: any){
-    return this.http.put('http://localhost:8080/api/solicitudes/' + id, solicitud);
+  update(href: string, solicitud: any){
+    return this.http.put(href, solicitud);
 
   }
 
-  delete(id: number){
-    return this.http.delete('http://localhost:8080/api/solicitudes' + id);
+  delete(href: string){
+    return this.http.delete(href);
 
   }
 }
