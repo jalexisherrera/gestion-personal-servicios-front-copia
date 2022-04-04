@@ -3,11 +3,11 @@
         <div class="col-md-6">
             <h3>Mis Solicitudes</h3>
 
-            <table>
+            <table class="table table-hover mt-5">
                 <thead>
                     <tr>
                         <th>DESCRIPCIÓN</th>
-                        <th>COMPLETADO</th>
+                        <th>COMPLETADO?</th>
                         <th></th>
                         
                     </tr>
@@ -15,8 +15,22 @@
                 <tbody>
                     <tr *ngFor="let solicitud of solicitud">
                         <td>{{ solicitud.descripcion }}</td>
-                        <td>{{ solicitud.completado }}</td>
-                        <td></td>
+                        <td>
+                            <span *ngIf="solicitud.estado; else solicitudIncompleta">Sí</span>
+                            <ng-template #solicitudIncompleta>No</ng-template>
+                            
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="bt btn-primary" (click)="editar(solicitud)">
+                                    Editar
+                                </button>
+                                <button class="bt btn-danger" (click)="eliminar(solicitud)">
+                                    Eliminar
+                                </button>
+                            </div>
+                            
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -24,8 +38,26 @@
         </div>
         <div class="col-md-6">
             <h3>
-                Nueva Solicitud
+                {{solicitudEnEdicion ? 'Editar ' : 'Nueva'}} Solicitud
             </h3>
+            <form class="mt-5" [formGroup]="formulario" (ngSubmit)="save()" autocomplete="off">
+                <div class="mb-2">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" id="descripcion" placeholder="Descripción" class="form-control" formControlName="descripcion">
+                </div>
+                <div class="mb-2 form-check">
+                    <label>
+                        <input type="checkbox" class="form-check-input" formControlName="estado">
+                        Completado</label>
+                    
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-primary">
+                        Guardar
+                    </button>
+                </div>
+                
+            </form>
 
         </div>
 
